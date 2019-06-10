@@ -31,31 +31,25 @@ paths_string_insert(){
 }
 
 init(){
-    case "${SNAP_ARCH}" in
-        amd64)
-            arch_triplet=x86_64-linux-gnu
-        ;;
-        armhf)
-            arch_triplet=arm-linux-gnueabihf
-        ;;
-        arm64)
-            arch_triplet=aarch64-linux-gnu
-        ;;
-        *)
-            arch_triplet="${SNAP_ARCH}"-linux-gnu
-        ;;
-    esac
+    if ! test -v X_DEBIAN_MULTIARCH_TRIPLET; then
+        # The backticks is not command substitution, but the <code> Markdown markup
+        # shellcheck disable=SC2016
+        printf -- \
+            'perl-launch: Error: This launcher requires the `debian-multiarch-triplet-provider-launch` launcher to be run in the first place.\n' \
+            >&2
+        exit 1
+    fi
 
     declare PERLLIB=
     # FIXME: Drop /etc and /usr/local paths if unnecessary
     for perl_path in \
-        "${SNAP}"/usr/lib/"${arch_triplet}"/perl/* \
-        "${SNAP}"/usr/lib/"${arch_triplet}"/perl5/* \
-        "${SNAP}"/usr/lib/"${arch_triplet}"/perl-base/* \
+        "${SNAP}"/usr/lib/"${X_DEBIAN_MULTIARCH_TRIPLET}"/perl/* \
+        "${SNAP}"/usr/lib/"${X_DEBIAN_MULTIARCH_TRIPLET}"/perl5/* \
+        "${SNAP}"/usr/lib/"${X_DEBIAN_MULTIARCH_TRIPLET}"/perl-base/* \
         "${SNAP}"/usr/share/perl/* \
         "${SNAP}"/usr/share/perl5 \
         "${SNAP}"/etc/perl \
-        "${SNAP}"/usr/local/lib/"${arch_triplet}"/perl/* \
+        "${SNAP}"/usr/local/lib/"${X_DEBIAN_MULTIARCH_TRIPLET}"/perl/* \
         "${SNAP}"/usr/local/share/perl/* \
         "${SNAP}"/usr/local/lib/site_perl; do
         # When `nullglob` is enabled filename matching returns null string when no files are matched

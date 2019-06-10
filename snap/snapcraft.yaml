@@ -8,6 +8,10 @@ description: |
       The perl-launch stage snap - doc - snapcraft.io
       https://forum.snapcraft.io/t/the-perl-launch-stage-snap/11736
 
+# build on least busy architecture
+architectures:
+- build-on: s390x
+  run-on: all
 base: core
 grade: stable
 confinement: strict

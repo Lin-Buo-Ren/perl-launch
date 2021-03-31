@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # This launcher setups environemnt required by Perl in snapped apps.
-# 林博仁 © 2019
+# 林博仁(Buo-ren, Lin) © 2021
 
 set \
     -o errexit \
@@ -45,7 +45,7 @@ init(){
     for perl_path in \
         "${SNAP}"/usr/lib/"${X_DEBIAN_MULTIARCH_TRIPLET}"/perl/* \
         "${SNAP}"/usr/lib/"${X_DEBIAN_MULTIARCH_TRIPLET}"/perl5/* \
-        "${SNAP}"/usr/lib/"${X_DEBIAN_MULTIARCH_TRIPLET}"/perl-base/* \
+        "${SNAP}"/usr/lib/"${X_DEBIAN_MULTIARCH_TRIPLET}"/perl-base \
         "${SNAP}"/usr/share/perl/* \
         "${SNAP}"/usr/share/perl5 \
         "${SNAP}"/etc/perl \
